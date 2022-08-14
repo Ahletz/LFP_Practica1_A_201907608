@@ -1,1 +1,5 @@
-print('Hola mundo')
+from Grafic import *
+
+new = Ventana()
+
+new.Window()
