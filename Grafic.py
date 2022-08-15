@@ -1,11 +1,14 @@
-from distutils.cmd import Command
+
 from tkinter import *
 from tkinter import filedialog
+
+from Analizador import *
 
 
 class Ventana:
 
     direccion =''
+    
 
     def __init__(self):
 
@@ -19,10 +22,13 @@ class Ventana:
         self.ventana.geometry('500x500')
         self.ventana.configure(background='LightCyan3')
 
+     
         self.Etiquetas()
         self.Botones()
 
+        
         self.ventana.mainloop()
+
         
 
     #DATOS DEL ESTUDIANTE MEDIANTE LABELS
@@ -38,10 +44,10 @@ class Ventana:
 
 
 
-         boton1 = Button(text='Abrir Archivo',command=self.AbrirArchivo,height=2,width=15).place(x=100,y=100)
-         boton2 = Button(text='Gestionar Cursos',command=self.AbrirArchivo,height=2,width=15).place(x=100,y=150)
-         boton3 = Button(text='Conteo de Creditos',command=self.AbrirArchivo,height=2,width=15).place(x=100,y=200)
-         boton4 = Button(text='Salir',command=self.ventana.destroy,height=2,width=15).place(x=100,y=250)
+         boton1 = Button(text='Abrir Archivo',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=150)
+         boton2 = Button(text='Gestionar Cursos',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=200)
+         boton3 = Button(text='Conteo de Creditos',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=250)
+         boton4 = Button(text='Salir',command=self.ventana.destroy,height=2,width=15).place(x=200,y=300)
          
 
 
@@ -50,6 +56,21 @@ class Ventana:
     def AbrirArchivo(self):
         archivo = filedialog.askopenfilename(title="Abrir",initialdir="C:/")
         self.direccion = archivo
+
+        self.Analisis = Analisis(self.direccion)
+
+        self.Contenido = Analisis.Contenido
+
+        print(self.Contenido)
+
+
+
+
+        
+
+
+    
+        
 
         
         
