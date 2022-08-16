@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 
 from Analizador import *
+from VentasAux import *
 
 
 class Ventana:
@@ -19,8 +20,9 @@ class Ventana:
     def Window(self):
 
         self.ventana = Tk()
-        self.ventana.geometry('500x500')
+        self.ventana.geometry('500x500+550+150')
         self.ventana.configure(background='LightCyan3')
+        self.ventana.resizable(False,False)
 
      
         self.Etiquetas()
@@ -45,7 +47,7 @@ class Ventana:
 
 
          boton1 = Button(text='Abrir Archivo',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=150)
-         boton2 = Button(text='Gestionar Cursos',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=200)
+         boton2 = Button(text='Gestionar Cursos',command=self.AbrirGestion,height=2,width=15).place(x=200,y=200)
          boton3 = Button(text='Conteo de Creditos',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=250)
          boton4 = Button(text='Salir',command=self.ventana.destroy,height=2,width=15).place(x=200,y=300)
          
@@ -54,14 +56,23 @@ class Ventana:
 
     #METODO PARA LA SELECCION DE ARCHIVO 
     def AbrirArchivo(self):
+
         archivo = filedialog.askopenfilename(title="Abrir",initialdir="C:/")
         self.direccion = archivo
-
         self.Analisis = Analisis(self.direccion)
-
         self.Contenido = Analisis.Contenido
-
         print(self.Contenido)
+
+
+    def AbrirGestion(self):
+
+       gestiones = Gestiones()
+
+       gestiones.GestionarCurso()
+
+
+
+
 
 
 
