@@ -1,6 +1,7 @@
 
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 #CLASE GESTION DE CURSOS
 class Gestiones:
@@ -19,6 +20,8 @@ class Gestiones:
        self.button()
 
        self.window.mainloop()
+
+       return self.contenido
 
     #BOTONES PARA LA GESTION DE CURSOS
     def button(self):
@@ -41,19 +44,19 @@ class Gestiones:
 
         llamado = Agregar_Curso()
 
-        llamado.agregar_curso()
+        self.contenido = llamado.agregar_curso(self.contenido)
 
     #METODO DE LLAMADO PARA LA VENTANA DE EDITAR CURSOS
     def LLamado_Editar_cursos(self):
 
         llamado = Editar_Curso()
-        llamado.editar_curso()
+        self.contenido = llamado.editar_curso(self.contenido)
 
     #METODO DE LLAMADO PARA LA VENTANA DE ELIMINAR CURSOS
     def LLamado_eliminar_cursos(self):
 
         llamado = Eliminar_curso()
-        llamado.Eliminar()
+        self.contenido = llamado.Eliminar(self.contenido)
         
 
 #CLASE LISTA DE CURSOS 
@@ -122,7 +125,9 @@ class Listar_Cursos:
 class Agregar_Curso:
 
     #METODO  VENTANA AGREGAR CURSO
-    def agregar_curso(self):
+    def agregar_curso(self, contenido):
+
+        self.contenido = contenido
 
         self.ventana_agregar = Tk()
         self.ventana_agregar.geometry('500x500+550+150')
@@ -135,13 +140,16 @@ class Agregar_Curso:
 
         self.ventana_agregar.mainloop()
 
+
+        return self.contenido
+
     #LABELS DE VENTANA
     def Etiquetas(self):
 
-        etiqueta1 = Label(self.ventana_agregar,text='Código',background='LightCyan3').place(x=100,y=100)
-        etiqueta2 = Label(self.ventana_agregar,text='Nombre',background='LightCyan3').place(x=100,y=150)
-        etiqueta3 = Label(self.ventana_agregar,text='Pre-Requisito',background='LightCyan3').place(x=100,y=200)
-        etiqueta4 = Label(self.ventana_agregar,text='Semestre',background='LightCyan3').place(x=100,y=250)
+        etiqueta1 = Label(self.ventana_agregar,text='Código',background='LightCyan3').place(x=100,y=50)
+        etiqueta2 = Label(self.ventana_agregar,text='Nombre',background='LightCyan3').place(x=100,y=100)
+        etiqueta3 = Label(self.ventana_agregar,text='Pre-Requisito',background='LightCyan3').place(x=100,y=150)
+        etiqueta4 = Label(self.ventana_agregar,text='Semestre',background='LightCyan3').place(x=100,y=200)
         etiqueta5 = Label(self.ventana_agregar,text='Opcionalidad',background='LightCyan3').place(x=100,y=250)
         etiqueta6 = Label(self.ventana_agregar,text='creditos',background='LightCyan3').place(x=100,y=300)
         etiqueta7 = Label(self.ventana_agregar,text='Estado',background='LightCyan3').place(x=100,y=350)
@@ -150,32 +158,74 @@ class Agregar_Curso:
     def Textbox(self):
         
         caja1 = StringVar()
-        Caja1 = Entry(self.ventana_agregar,textvariable=caja1).place(x=250,y=100)
         caja2 = StringVar()
-        Caja2 = Entry(self.ventana_agregar,textvariable=caja2).place(x=250,y=150)
         caja3 = StringVar()
-        Caja3 = Entry(self.ventana_agregar,textvariable=caja3).place(x=250,y=200)
         caja4 = StringVar()
-        Caja4 = Entry(self.ventana_agregar,textvariable=caja4).place(x=250,y=250)
         caja5 = StringVar()
-        Caja5 = Entry(self.ventana_agregar,textvariable=caja5).place(x=250,y=300)
         caja6 = StringVar()
-        Caja6 = Entry(self.ventana_agregar,textvariable=caja6).place(x=250,y=350)
+        caja7 = StringVar()
 
-    
+
+        self.Caja1 = Entry(self.ventana_agregar,textvariable= caja1)
+        self.Caja1.place(x=250,y=50)
+        self.Caja2 = Entry(self.ventana_agregar,textvariable= caja2)
+        self.Caja2.place(x=250,y=100)
+        self.Caja3 = Entry(self.ventana_agregar,textvariable= caja3)
+        self.Caja3.place(x=250,y=150)
+        self.Caja4 = Entry(self.ventana_agregar,textvariable= caja4)
+        self.Caja4.place(x=250,y=200)
+        self.Caja5 = Entry(self.ventana_agregar,textvariable= caja5)
+        self.Caja5.place(x=250,y=250)
+        self.Caja6 = Entry(self.ventana_agregar,textvariable= caja6)
+        self.Caja6.place(x=250,y=300)
+        self.Caja7 = Entry(self.ventana_agregar,textvariable= caja7)
+        self.Caja7.place(x=250,y=350)
+
+        
     #METODO PARA AGREGAR BOTONES
     def Botones(self):
 
-        boton1 = Button(self.ventana_agregar,text='Agregar',height=2,width=15).place(x=100,y=400)
+        boton1 = Button(self.ventana_agregar,text='Agregar',height=2,width=15,command=self.agregar).place(x=100,y=400)
         boton2 = Button(self.ventana_agregar,text='Regresar',height=2,width=15, command=self.ventana_agregar.destroy).place(x=300,y=400)
 
+    def agregar(self):
 
+        nuevo = []
+        codigo = self.Caja1.get()
+        nombre = self.Caja2.get()
+        prerequisitos = self.Caja3.get()
+        semestre = self.Caja4.get()
+        opcionalidad = self.Caja5.get()
+        creditos = self.Caja6.get()
+        estado = self.Caja7.get()
+
+        nuevo.append(codigo)
+        nuevo.append(nombre)
+        nuevo.append(prerequisitos)
+        nuevo.append(opcionalidad)
+        nuevo.append(semestre)
+        nuevo.append(creditos)
+        nuevo.append(estado)
+
+        if codigo.isnumeric() and semestre.isnumeric() and creditos.isnumeric() and (opcionalidad =='1' or opcionalidad=='0') and (estado == '1' or estado =='0' or estado =='-1'):
+
+            self.contenido.append(nuevo)
+            print(nuevo)
+            messagebox.showinfo(message="CURSO AGREGADO")
+
+        else:
+
+            messagebox.askretrycancel(message='LOS DATOS QUE INGRESO NO SON CORRECTOS', title='Error')
+
+        
 
 
 class Editar_Curso:
     
     #METODO  VENTANA AGREGAR CURSO
-    def editar_curso(self):
+    def editar_curso(self, contenido):
+        
+        self.contenido = contenido
 
         self.ventana_editar = Tk()
         self.ventana_editar.geometry('500x500+550+150')
@@ -188,13 +238,15 @@ class Editar_Curso:
 
         self.ventana_editar.mainloop()
 
+        return self.contenido
+
     #LABELS DE VENTANA
     def Etiquetas(self):
 
-        etiqueta1 = Label(self.ventana_editar,text='Código',background='LightCyan3').place(x=100,y=100)
-        etiqueta2 = Label(self.ventana_editar,text='Nombre',background='LightCyan3').place(x=100,y=150)
-        etiqueta3 = Label(self.ventana_editar,text='Pre-Requisito',background='LightCyan3').place(x=100,y=200)
-        etiqueta4 = Label(self.ventana_editar,text='Semestre',background='LightCyan3').place(x=100,y=250)
+        etiqueta1 = Label(self.ventana_editar,text='Código',background='LightCyan3').place(x=100,y=50)
+        etiqueta2 = Label(self.ventana_editar,text='Nombre',background='LightCyan3').place(x=100,y=100)
+        etiqueta3 = Label(self.ventana_editar,text='Pre-Requisito',background='LightCyan3').place(x=100,y=150)
+        etiqueta4 = Label(self.ventana_editar,text='Semestre',background='LightCyan3').place(x=100,y=200)
         etiqueta5 = Label(self.ventana_editar,text='Opcionalidad',background='LightCyan3').place(x=100,y=250)
         etiqueta6 = Label(self.ventana_editar,text='creditos',background='LightCyan3').place(x=100,y=300)
         etiqueta7 = Label(self.ventana_editar,text='Estado',background='LightCyan3').place(x=100,y=350)
@@ -203,24 +255,93 @@ class Editar_Curso:
     def Textbox(self):
         
         caja1 = StringVar()
-        Caja1 = Entry(self.ventana_editar,textvariable=caja1).place(x=250,y=100)
         caja2 = StringVar()
-        Caja2 = Entry(self.ventana_editar,textvariable=caja2).place(x=250,y=150)
         caja3 = StringVar()
-        Caja3 = Entry(self.ventana_editar,textvariable=caja3).place(x=250,y=200)
         caja4 = StringVar()
-        Caja4 = Entry(self.ventana_editar,textvariable=caja4).place(x=250,y=250)
         caja5 = StringVar()
-        Caja5 = Entry(self.ventana_editar,textvariable=caja5).place(x=250,y=300)
         caja6 = StringVar()
-        Caja6 = Entry(self.ventana_editar,textvariable=caja6).place(x=250,y=350)
+        caja7 = StringVar()
+
+
+        self.Caja1 = Entry(self.ventana_editar,textvariable= caja1)
+        self.Caja1.place(x=250,y=50)
+        self.Caja2 = Entry(self.ventana_editar,textvariable= caja2)
+        self.Caja2.place(x=250,y=100)
+        self.Caja3 = Entry(self.ventana_editar,textvariable= caja3)
+        self.Caja3.place(x=250,y=150)
+        self.Caja4 = Entry(self.ventana_editar,textvariable= caja4)
+        self.Caja4.place(x=250,y=200)
+        self.Caja5 = Entry(self.ventana_editar,textvariable= caja5)
+        self.Caja5.place(x=250,y=250)
+        self.Caja6 = Entry(self.ventana_editar,textvariable= caja6)
+        self.Caja6.place(x=250,y=300)
+        self.Caja7 = Entry(self.ventana_editar,textvariable= caja7)
+        self.Caja7.place(x=250,y=350)
 
     
     #METODO PARA AGREGAR BOTONES
     def Botones(self):
 
-        boton1 = Button(self.ventana_editar,text='Agregar',height=2,width=15).place(x=100,y=400)
+        boton1 = Button(self.ventana_editar,text='Editar',height=2,width=15,command=self.editar).place(x=100,y=400)
         boton2 = Button(self.ventana_editar,text='Regresar',height=2,width=15, command=self.ventana_editar.destroy).place(x=300,y=400)
+
+
+    def editar(self):
+
+        nuevo = []
+        codigo = self.Caja1.get()
+        nombre = self.Caja2.get()
+        prerequisitos = self.Caja3.get()
+        semestre = self.Caja4.get()
+        opcionalidad = self.Caja5.get()
+        creditos = self.Caja6.get()
+        estado = self.Caja7.get()
+
+        nuevo.append(codigo)
+        nuevo.append(nombre)
+        nuevo.append(prerequisitos)
+        nuevo.append(opcionalidad)
+        nuevo.append(semestre)
+        nuevo.append(creditos)
+        nuevo.append(estado)
+
+        if codigo.isnumeric() and semestre.isnumeric() and creditos.isnumeric() and (opcionalidad =='1' or opcionalidad=='0') and (estado == '1' or estado =='0' or estado =='-1'):
+
+            repetido = BooleanVar()
+            ubicacion = IntVar()
+            r = 0
+            
+            for i in self.contenido:
+                
+                if i[0] == codigo:
+
+                    repetido = True
+
+                    ubicacion = r
+                else:
+
+                    r+=1
+            
+            if repetido == True:
+
+                self.contenido[ubicacion][0] = codigo
+                self.contenido[ubicacion][1] = nombre
+                self.contenido[ubicacion][2] = prerequisitos
+                self.contenido[ubicacion][3] = semestre
+                self.contenido[ubicacion][4] = opcionalidad
+                self.contenido[ubicacion][5] = creditos
+                self.contenido[ubicacion][6] = estado
+                messagebox.showinfo(message="CURSO EDITADO!")
+
+            else:
+
+                messagebox.showinfo(message="CURSO NO ENCONTRADO PARA EDITAR")
+
+            
+
+        else:
+
+            messagebox.askretrycancel(message='LOS DATOS QUE INGRESO NO SON CORRECTOS', title='Error')
 
 
 #CLASE ELIMINAR CURSOSO 
@@ -261,7 +382,9 @@ class Eliminar_curso:
 #CLASE PARA LA VENTANA DE CONTEO DE CREDITOS 
 class Conteo_Creditos:
 
-    def Conteo(self):
+    def Conteo(self, contenido):
+
+        self.conenido = contenido
 
         self.Conteo = Tk()
         self.Conteo.geometry('500x500+550+150')

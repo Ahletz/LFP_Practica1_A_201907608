@@ -8,6 +8,6 @@ class Herramientas:
 
         contenido = contenido
 
-        print(contenido)
+        print('Exito!')
 
         return contenido

@@ -68,12 +68,12 @@ class Ventana:
 
        gestiones = Gestiones()
 
-       gestiones.GestionarCurso(self.Contenido)
+       self.Contenido = gestiones.GestionarCurso(self.Contenido)
 
     def AbrirConteo(self):
 
         conteo = Conteo_Creditos()
-        conteo.Conteo()
+        conteo.Conteo(self.Contenido)
 
 
 
