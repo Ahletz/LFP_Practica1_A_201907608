@@ -1,4 +1,5 @@
 # encoding:utf-8
+from Ayudas import *
 
 class Analisis:
 
@@ -19,7 +20,7 @@ class Analisis:
 
             self.Analizador() #LLAMADO DEL METODO PARA ANALIZAR EL CONTENIDO 
 
-        except:
+        except :
 
             print('NO SE REGISTRO UN ARCHIVO PARA PODER ANALIZAR')
 
@@ -39,5 +40,20 @@ class Analisis:
                 lista = linea.split(',')
                 self.Contenido.append(lista)
                 linea = ''
+
+        ayuda = Herramientas()
+
+        self.Contenido = ayuda.Repetido(self.Contenido)
+
+        
+
+
+
+    
+
+
+            
+
+
 
 

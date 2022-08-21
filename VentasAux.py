@@ -6,7 +6,9 @@ from tkinter import ttk
 class Gestiones:
 
     #VENTANA GESTION DE CURSOS
-    def GestionarCurso(self):
+    def GestionarCurso(self, contenido):
+
+       self.contenido = contenido #AQUI SE ENCUENTRA LA LISTA CON INFORMACION
 
        self.window = Tk()
 
@@ -32,7 +34,7 @@ class Gestiones:
 
         llamado = Listar_Cursos()
 
-        llamado.lista_cursos()
+        llamado.lista_cursos(self.contenido)
 
     #METODO DE LLAMADO PARA LA VENTANA DE AGREGAR CURSOS
     def LLamado_Agregar_curso(self):
@@ -59,10 +61,12 @@ class Listar_Cursos:
 
 
     #METODO VENTANA DE LISTA DE CURSOS
-    def lista_cursos(self) :
+    def lista_cursos(self, contenido) :
+
+        self.contenido = contenido #AQUI SE OBTIENEN LOS DATOS PARA LA TABLA
 
         self.ventana_lista_cursos = Tk()
-        self.ventana_lista_cursos.geometry('500x500+550+150')
+        self.ventana_lista_cursos.geometry('600x500+500+150')
         self.ventana_lista_cursos.configure(background='LightCyan3')
         self.ventana_lista_cursos.resizable(0,0)
 
@@ -82,11 +86,12 @@ class Listar_Cursos:
     def Tabla(self):
 
         #UTILIZACION DE TREEVIEW PARA CREAR LA TABLA 
-        tb = ttk.Treeview(self.ventana_lista_cursos, columns=('col1','col2','col3','col4','col5','col6'), show='headings')
+        tb = ttk.Treeview(self.ventana_lista_cursos, columns=('col0','col1','col2','col3','col4','col5','col6'), show='headings')
         tb.place(x=10,y=20)
 
         #CREACION DE COLUMNAS CON PROPIEDADES
-        tb.column('#0',width=80)
+        #tb.column('#0',width=80)
+        tb.column('col0',width=80,anchor=CENTER)
         tb.column('col1',width=80,anchor=CENTER)
         tb.column('col2',width=80,anchor=CENTER)
         tb.column('col3',width=80,anchor=CENTER)
@@ -95,13 +100,22 @@ class Listar_Cursos:
         tb.column('col6',width=80,anchor=CENTER)
 
         #TITULO DE LAS COLUMNAS
-        tb.heading('#0',text='Código',anchor = CENTER)
+        #tb.heading('#0',text='Código',anchor = CENTER)
+        tb.heading('col0',text='Código',anchor = CENTER)
         tb.heading('col1',text='Nombre',anchor = CENTER)
         tb.heading('col2',text='Pre-Requisito',anchor = CENTER)
         tb.heading('col3',text='Opcionalidad',anchor = CENTER)
         tb.heading('col4',text='Semestre',anchor = CENTER)
         tb.heading('col5',text='Creditos',anchor = CENTER)
         tb.heading('col6',text='Estado',anchor = CENTER)
+
+            #CICLO FOR PARA PODER CREAR CONTENIDO EN LA TABLA
+        for i in self.contenido:
+
+            tb.insert('',END, values=i)
+
+
+        
         
 
 #CLASE PARA AGREGAR UN CRUSO

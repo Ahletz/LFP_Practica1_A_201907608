@@ -61,14 +61,14 @@ class Ventana:
         self.direccion = archivo
         self.Analisis = Analisis(self.direccion)
         self.Contenido = Analisis.Contenido
-        print(self.Contenido)
+       # print(self.Contenido)
 
     #metodod para llamar ventana de gestion de cursos 
     def AbrirGestion(self):
 
        gestiones = Gestiones()
 
-       gestiones.GestionarCurso()
+       gestiones.GestionarCurso(self.Contenido)
 
     def AbrirConteo(self):
 
