@@ -9,20 +9,24 @@ class Analisis:
 
         print('COMENZANDO ANALISIS')
 
-        self.ubicacion = ubicacion  # OBTENCION DE UBICACION DE DOCUMENTO
+        try:
 
-        contenido = open(self.ubicacion, encoding='utf-8')  # ABRIR ARCHIVO
+            self.ubicacion = ubicacion  # OBTENCION DE UBICACION DE DOCUMENTO
 
-        self.texto = contenido.read()  # OBTENER EL CONTENIDO DEL ARCHIVO
+            contenido = open(self.ubicacion, encoding='utf-8')  # ABRIR ARCHIVO
 
-        self.Analizador() #LLAMADO DEL METODO PARA ANALIZAR EL CONTENIDO 
+            self.texto = contenido.read()  # OBTENER EL CONTENIDO DEL ARCHIVO
+
+            self.Analizador() #LLAMADO DEL METODO PARA ANALIZAR EL CONTENIDO 
+
+        except:
+
+            print('NO SE REGISTRO UN ARCHIVO PARA PODER ANALIZAR')
 
     def Analizador(self):
 
         txt = self.texto + '\n' 
         linea = ''
-
-
         #SEPARACION DEL TEXTO Y MANIPULACION EN LISTA
         for i in txt:
 

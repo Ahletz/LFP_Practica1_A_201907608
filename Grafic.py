@@ -48,7 +48,7 @@ class Ventana:
 
          boton1 = Button(text='Abrir Archivo',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=150)
          boton2 = Button(text='Gestionar Cursos',command=self.AbrirGestion,height=2,width=15).place(x=200,y=200)
-         boton3 = Button(text='Conteo de Creditos',command=self.AbrirArchivo,height=2,width=15).place(x=200,y=250)
+         boton3 = Button(text='Conteo de Creditos',command=self.AbrirConteo,height=2,width=15).place(x=200,y=250)
          boton4 = Button(text='Salir',command=self.ventana.destroy,height=2,width=15).place(x=200,y=300)
          
 
@@ -57,18 +57,23 @@ class Ventana:
     #METODO PARA LA SELECCION DE ARCHIVO 
     def AbrirArchivo(self):
 
-        archivo = filedialog.askopenfilename(title="Abrir",initialdir="C:/")
+        archivo = filedialog.askopenfilename(title="Abrir",initialdir="C:/", filetypes=(('Archivos CSV','*.csv'),('Archivos LFP','*.lfp')))
         self.direccion = archivo
         self.Analisis = Analisis(self.direccion)
         self.Contenido = Analisis.Contenido
         print(self.Contenido)
 
-
+    #metodod para llamar ventana de gestion de cursos 
     def AbrirGestion(self):
 
        gestiones = Gestiones()
 
        gestiones.GestionarCurso()
+
+    def AbrirConteo(self):
+
+        conteo = Conteo_Creditos()
+        conteo.Conteo()
 
 
 
