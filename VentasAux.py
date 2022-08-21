@@ -348,7 +348,9 @@ class Editar_Curso:
 class Eliminar_curso:
 
     #METODO VENTANA PARA ELIMINAR CURSOS
-    def Eliminar(self):
+    def Eliminar(self,contenido):
+
+        self.contenido = contenido
 
         self.ventana_eliminar = Tk()
         self.ventana_eliminar.geometry('500x500+550+150')
@@ -360,6 +362,9 @@ class Eliminar_curso:
         self.ventana_eliminar.mainloop()
 
 
+        return self.contenido
+
+
     #COMPONENETES VENTANA ELIMINAR CURSOS
     def componentes(self):
 
@@ -368,11 +373,41 @@ class Eliminar_curso:
 
         #CAJA DE TEXTO CON SU RESPECTIVA VARIABLE
         caja1 = StringVar()
-        Caja1 = Entry(self.ventana_eliminar,textvariable=caja1).place(x=200,y=150)
+        self.Caja1 = Entry(self.ventana_eliminar,textvariable=caja1)
+        self.Caja1.place(x=200,y=150)
 
         #BOTONES
-        boton1 = Button(self.ventana_eliminar,text='Eliminar',height=2,width=15).place(x=100,y=400)
+        boton1 = Button(self.ventana_eliminar,text='Eliminar',height=2,width=15,command=self.Eliminacion).place(x=100,y=400)
         boton2 = Button(self.ventana_eliminar,text='Regresar',height=2,width=15,command=self.ventana_eliminar.destroy).place(x=300,y=400)
+
+    def Eliminacion(self):
+
+        codigo = self.Caja1.get()
+
+        Encontrado = BooleanVar()
+        ubicacion = IntVar()
+
+        cont = 0
+
+        for i in self.contenido:
+
+            if i[0] == codigo:
+
+                Encontrado = True
+
+                ubicacion = cont
+            else:
+
+                cont +=1
+        
+        if Encontrado == True:
+
+            self.contenido.pop(ubicacion)
+            messagebox.showinfo(message="CURSO ELIMINADO")
+
+        else:
+
+            messagebox.showinfo(message="CURSO NO ENCONTRADO PARA ELIMINAR")
 
 
 
