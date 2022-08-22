@@ -411,9 +411,6 @@ class Eliminar_curso:
 
 
 
-
-
-
 #CLASE PARA LA VENTANA DE CONTEO DE CREDITOS 
 class Conteo_Creditos:
 
@@ -443,35 +440,159 @@ class Conteo_Creditos:
 
         #CAJA DE TEXTO CON SU RESPECTIVA VARIABLE
         caja1 = StringVar()
-        Caja1 = Entry(self.Conteo,textvariable=caja1,width=5).place(x=330,y=250)
         caja2 = StringVar()
-        Caja2 = Entry(self.Conteo,textvariable=caja2,width=5).place(x=250,y=350)
+        self.Caja1 = Entry(self.Conteo,textvariable=caja1,width=5)
+        self.Caja1.place(x=330,y=250)
+        self.Caja2 = Entry(self.Conteo,textvariable=caja2,width=5)
+        self.Caja2.place(x=250,y=350)
 
         caja3 = StringVar()
-        Caja3 = Entry(self.Conteo,textvariable=caja3,width=5,state='disabled').place(x=220,y=100)
         caja4 = StringVar()
-        Caja4 = Entry(self.Conteo,textvariable=caja4,width=5,state='disabled').place(x=220,y=150)
         caja5 = StringVar()
-        Caja5 = Entry(self.Conteo,textvariable=caja5,width=5,state='disabled').place(x=220,y=200)
+        self.Caja3 = Entry(self.Conteo,textvariable=caja3,width=5)
+        self.Caja3.place(x=220,y=100)
+        self.Caja4 = Entry(self.Conteo,textvariable=caja4,width=5)
+        self.Caja4.place(x=220,y=150)
+        self.Caja5 = Entry(self.Conteo,textvariable=caja5,width=5)
+        self.Caja5.place(x=220,y=200)
+        
 
         caja6 = StringVar()
-        Caja6 = Entry(self.Conteo,textvariable=caja6,width=2,state='disabled').place(x=260,y=300)
         caja7 = StringVar()
-        Caja7 = Entry(self.Conteo,textvariable=caja7,width=2,state='disabled').place(x=260,y=400)
+        self.Caja6 = Entry(self.Conteo,textvariable=caja6,width=2)
+        self.Caja6.place(x=260,y=300)
+        self.Caja7 = Entry(self.Conteo,textvariable=caja7,width=2)
+        self.Caja7.place(x=260,y=400)
 
         #BOTONES
-        boton1 = Button(self.Conteo,text='Contar',height=1,width=5).place(x=300,y=300)
-        boton2 = Button(self.Conteo,text='Contar',height=1,width=5).place(x=300,y=400)
+        boton1 = Button(self.Conteo,text='Contar',height=1,width=5,command=self.Contar_obligatorios).place(x=300,y=300)
 
-        boton3 = Button(self.Conteo,text='↑',height=1,width=1).place(x=280,y=290)
-        boton4 = Button(self.Conteo,text='↓',height=1,width=1).place(x=280,y=315)
+        boton2 = Button(self.Conteo,text='Contar',height=1,width=5,command=self.Contar_semestre).place(x=300,y=400)
 
-        boton5 = Button(self.Conteo,text='↑',height=1,width=1).place(x=280,y=390)
-        boton6 = Button(self.Conteo,text='↓',height=1,width=1).place(x=280,y=415)
+        boton3 = Button(self.Conteo,text='↑',height=1,width=1,command=self.cambiar_numero_abajo1).place(x=280,y=290)
+        boton4 = Button(self.Conteo,text='↓',height=1,width=1,command=self.cambiar_numero_abajo1).place(x=280,y=315)
+
+        boton5 = Button(self.Conteo,text='↑',height=1,width=1,command=self.cambiar_numero_abajo2).place(x=280,y=390)
+        boton6 = Button(self.Conteo,text='↓',height=1,width=1,command=self.cambiar_numero_arriba2).place(x=280,y=415)
 
         boton7 = Button(self.Conteo,text='Regresar',height=2,width=15,command=self.Conteo.destroy).place(x=350,y=450)
 
+        self.contar_creditos()
 
+
+
+    def contar_creditos(self):
+
+        aprobados = 0
+        cursandos = 0
+        pendientes = 0
+
+        for i in self.conenido:
+
+            if i[6] == '0':
+
+                aprobados += int(i[5])
+
+            elif i[6] == '1':
+
+                cursandos += int(i[5])
+
+            elif i[6] == '-1':
+
+                pendientes +=int(i[5])
+
+        self.Caja3.insert(0,str(aprobados))
+        self.Caja4.insert(0,str(cursandos))
+        self.Caja5.insert(0,str(pendientes))
+
+        self.Caja3.configure(state='disabled')
+        self.Caja4.configure(state='disabled')
+        self.Caja5.configure(state='disabled')
+
+
+        self.Caja6.insert(0,'1')
+        self.Caja7.insert(0,'2')
+
+    
+    
+    def cambiar_numero_arriba1(self):
+
+
+        contador = int(self.Caja6.get())
+
+        self.Caja6.delete(0,'end')
+
+        contador +=1
+
+        self.Caja6.insert(0,str(contador))
+        
+        
+
+    def cambiar_numero_arriba2(self):
+
+        self.Caja7.insert(0,'0')
+
+        contador = int(self.Caja7.get())
+
+        contador +=1
+
+        self.Caja7.insert(0,str(contador))
+
+    
+    def cambiar_numero_abajo1(self):
+
+        self.Caja6.insert(0,'0')
+
+        contador = int(self.Caja6.get())
+
+        contador -=1
+
+        self.Caja6.insert(0,str(contador))
+
+    def cambiar_numero_abajo2(self):
+
+        self.Caja7.insert(0,'0')
+
+        contador = int(self.Caja7.get())
+
+        contador -=1
+
+        self.Caja6.insert(0,str(contador))
+
+
+
+
+
+    def Contar_obligatorios(self):
+
+        cantidad = 0
+        semestre = int(self.Caja6.get())
+
+        for i in self.conenido:
+
+            if i[4] == '1' and int(i[3])>semestre:
+
+                cantidad += int(i[5])
+
+        self.Caja1.delete(0,'end')       
+        self.Caja1.insert(0,str(cantidad))
+
+
+    def Contar_semestre(self):
+
+        cantidad = 0
+        semestre = int(self.Caja7.get())
+
+
+        for i in self.conenido:
+
+            if int(i[3])>semestre:
+
+                cantidad += int(i[5])
+
+        self.Caja2.delete(0,'end')        
+
+        self.Caja2.insert(0,str(cantidad))
 
 
 
